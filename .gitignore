@@ -1,3 +1,9 @@
 *.jpg
 *.png
 *.xcf
+
+/game/audio
+/game/effects
+/game/fonts
+/game/img
+/game/save
