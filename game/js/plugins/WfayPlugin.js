@@ -36,6 +36,7 @@
     clownyLookupTable.set(1, 2);
     clownyLookupTable.set(2, 3);
 
+    // map states (such as clowny) to a table mapping transformations
     const stateLookupTable = new Map();
     stateLookupTable.set(clownyState, clownyLookupTable);
 
