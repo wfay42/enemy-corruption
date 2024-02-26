@@ -35,8 +35,14 @@
         // but that could be because I'm invoking it at the wrong time
         console.log("In WhoInTroop");
         $gameMessage.add("My message");
-        for (const name of $gameTroop.enemyNames()) {
-            $gameMessage.add(TextManager.emerge.format(name));
+        for (const game_enemy of $gameTroop.members()) {
+            $gameMessage.add("Enemy: " + game_enemy.name());
+            if (game_enemy.enemyId() == 1){
+                game_enemy.transform(2);
+            } else if (game_enemy.enemyId() == 2) {
+                game_enemy.transform(3);
+            }
+
         }
         console.log("In WhoInTroop");
     });
