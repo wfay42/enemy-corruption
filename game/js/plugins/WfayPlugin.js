@@ -36,15 +36,18 @@
     clownyLookupTable.set(1, 2);
     clownyLookupTable.set(2, 3);
 
+    const stateLookupTable = new Map();
+    stateLookupTable.set(clownyState, clownyLookupTable);
+
     const lookupFunction = function(stateId, enemyId) {
-        return clownyLookupTable.get(enemyId);
+        const lookupTable = stateLookupTable.get(stateId);
+        if (lookupTable) {
+            return lookupTable.get(enemyId);
+        }
+        return null;
     };
 
     PluginManager.registerCommand(pluginName, "WhoInTroop", args => {
-        // TODO: you should only trigger this during a battle. I'm having trouble getting this to show up,
-        // but that could be because I'm invoking it at the wrong time
-        console.log("In WhoInTroop");
-        $gameMessage.add("My message");
         for (const game_enemy of $gameTroop.members()) {
             $gameMessage.add("Enemy: " + game_enemy.name());
             if (game_enemy.isStateAffected(clownyState)) {
@@ -53,16 +56,10 @@
                 if (newEnemyId) {
                     game_enemy.transform(newEnemyId);
                 }
-                // if (game_enemy.enemyId() == 1){
-                //     game_enemy.transform(2);
-                // } else if (game_enemy.enemyId() == 2) {
-                //     game_enemy.transform(3);
-                // }
                 game_enemy.eraseState(clownyState);
             }
 
         }
-        console.log("In WhoInTroop");
     });
 
     /**
