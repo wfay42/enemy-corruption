@@ -24,11 +24,21 @@
  */
 (() => {
     const pluginName = "WfayPlugin";
+    const clownyState = 32;
     let foo = "";
 
     PluginManager.registerCommand(pluginName, "set", args => {
         foo = String(args.text)
     });
+
+    // map "before" enemyId to "after" enemyId
+    const clownyLookupTable = new Map();
+    clownyLookupTable.set(1, 2);
+    clownyLookupTable.set(2, 3);
+
+    const lookupFunction = function(stateId, enemyId) {
+        return clownyLookupTable.get(enemyId);
+    };
 
     PluginManager.registerCommand(pluginName, "WhoInTroop", args => {
         // TODO: you should only trigger this during a battle. I'm having trouble getting this to show up,
@@ -37,10 +47,18 @@
         $gameMessage.add("My message");
         for (const game_enemy of $gameTroop.members()) {
             $gameMessage.add("Enemy: " + game_enemy.name());
-            if (game_enemy.enemyId() == 1){
-                game_enemy.transform(2);
-            } else if (game_enemy.enemyId() == 2) {
-                game_enemy.transform(3);
+            if (game_enemy.isStateAffected(clownyState)) {
+
+                const newEnemyId = lookupFunction(clownyState, game_enemy.enemyId());
+                if (newEnemyId) {
+                    game_enemy.transform(newEnemyId);
+                }
+                // if (game_enemy.enemyId() == 1){
+                //     game_enemy.transform(2);
+                // } else if (game_enemy.enemyId() == 2) {
+                //     game_enemy.transform(3);
+                // }
+                game_enemy.eraseState(clownyState);
             }
 
         }
