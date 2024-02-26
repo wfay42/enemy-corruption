@@ -50,7 +50,6 @@
 
     PluginManager.registerCommand(pluginName, "WhoInTroop", args => {
         for (const game_enemy of $gameTroop.members()) {
-            $gameMessage.add("Enemy: " + game_enemy.name());
             if (game_enemy.isStateAffected(clownyState)) {
 
                 const newEnemyId = lookupFunction(clownyState, game_enemy.enemyId());
@@ -59,7 +58,6 @@
                 }
                 game_enemy.eraseState(clownyState);
             }
-
         }
     });
 
