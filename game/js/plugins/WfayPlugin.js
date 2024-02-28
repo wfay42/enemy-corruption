@@ -25,6 +25,8 @@
 (() => {
     const pluginName = "WfayPlugin";
     const clownyState = 32;
+    const femmeFataleState = 33;
+    const maidState = 34;
     let foo = "";
 
     PluginManager.registerCommand(pluginName, "set", args => {
@@ -36,9 +38,19 @@
     clownyLookupTable.set(1, 2);
     clownyLookupTable.set(2, 3);
 
+    const femmeFataleLookupTable = new Map();
+    femmeFataleLookupTable.set(4, 5);
+    femmeFataleLookupTable.set(5, 6);
+
+    const maidLookupTable = new Map();
+    maidLookupTable.set(4, 7);
+    maidLookupTable.set(7, 8);
+
     // map states (such as clowny) to a table mapping transformations
     const stateLookupTable = new Map();
     stateLookupTable.set(clownyState, clownyLookupTable);
+    stateLookupTable.set(femmeFataleState, femmeFataleLookupTable);
+    stateLookupTable.set(maidState, maidLookupTable);
 
     const lookupFunction = function(stateId, enemyId) {
         const lookupTable = stateLookupTable.get(stateId);
@@ -50,13 +62,16 @@
 
     PluginManager.registerCommand(pluginName, "WhoInTroop", args => {
         for (const game_enemy of $gameTroop.members()) {
-            if (game_enemy.isStateAffected(clownyState)) {
+            for (const state_name of [clownyState, femmeFataleState, maidState]) {
+                if (game_enemy.isStateAffected(state_name)) {
 
-                const newEnemyId = lookupFunction(clownyState, game_enemy.enemyId());
-                if (newEnemyId) {
-                    game_enemy.transform(newEnemyId);
+                    const newEnemyId = lookupFunction(state_name, game_enemy.enemyId());
+                    if (newEnemyId) {
+                        game_enemy.transform(newEnemyId);
+                    }
+                    game_enemy.eraseState(state_name);
+                    break;
                 }
-                game_enemy.eraseState(clownyState);
             }
         }
     });
