@@ -8,10 +8,6 @@
  *
  * This plugin is testing stuff out
  *
- * @command set
- * @text Set a string value
- * @desc sets a value for testing
- *
  * @arg text
  * @type multiline_string
  * @text Text
@@ -27,11 +23,9 @@
     const clownyState = 32;
     const femmeFataleState = 33;
     const maidState = 34;
-    let foo = "";
+    const stepfordState = 35;
 
-    PluginManager.registerCommand(pluginName, "set", args => {
-        foo = String(args.text)
-    });
+    const statesArray = [clownyState, femmeFataleState, maidState, stepfordState];
 
     const stateLookupTable = new Map();
 
@@ -57,8 +51,13 @@
         }
     }
 
-    addToLookupTable(maidState, [4, 7, 8]);
+    // police officer
     addToLookupTable(femmeFataleState, [4, 5, 6]);
+    addToLookupTable(maidState, [4, 7, 8]);
+    addToLookupTable(clownyState, [4, 9, 10]);
+    addToLookupTable(stepfordState, [4, 11, 12]);
+
+    // test character
     addToLookupTable(clownyState, [1, 2, 3]);
 
     /**
@@ -77,7 +76,7 @@
 
     PluginManager.registerCommand(pluginName, "WhoInTroop", args => {
         for (const game_enemy of $gameTroop.members()) {
-            for (const state_name of [clownyState, femmeFataleState, maidState]) {
+            for (const state_name of statesArray) {
                 if (game_enemy.isStateAffected(state_name)) {
 
                     const newEnemyId = lookupFunction(state_name, game_enemy.enemyId());
