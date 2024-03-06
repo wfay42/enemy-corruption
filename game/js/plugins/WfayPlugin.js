@@ -33,19 +33,7 @@
         foo = String(args.text)
     });
 
-    // map "before" enemyId to "after" enemyId
-    const clownyLookupTable = new Map();
-    clownyLookupTable.set(1, 2);
-    clownyLookupTable.set(2, 3);
-
-    const femmeFataleLookupTable = new Map();
-    femmeFataleLookupTable.set(4, 5);
-    femmeFataleLookupTable.set(5, 6);
-
-    // map states (such as clowny) to a table mapping transformations
     const stateLookupTable = new Map();
-    stateLookupTable.set(clownyState, clownyLookupTable);
-    stateLookupTable.set(femmeFataleState, femmeFataleLookupTable);
 
     /**
      *
@@ -70,6 +58,8 @@
     }
 
     addToLookupTable(maidState, [4, 7, 8]);
+    addToLookupTable(femmeFataleState, [4, 5, 6]);
+    addToLookupTable(clownyState, [1, 2, 3]);
 
     /**
      *
