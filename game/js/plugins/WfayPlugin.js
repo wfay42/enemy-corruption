@@ -29,6 +29,8 @@
 
     const stateLookupTable = new Map();
 
+    const villager = 13;
+
     /**
      *
      * @param {*} stateId ID of state to add to the table (like Poison)
@@ -59,6 +61,9 @@
 
     // test character
     addToLookupTable(clownyState, [1, 2, 3]);
+
+    // villager
+    addToLookupTable(clownyState, [villager, villager+1, villager+2, villager+3]);
 
     /**
      *
