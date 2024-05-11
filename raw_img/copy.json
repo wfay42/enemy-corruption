@@ -1,0 +1,17 @@
+{
+    "descriptions": {
+        "skip": "images to skip copying",
+        "enemies": "list of images to copy to enemies_dir",
+        "titles": "list of images to copy to titles_dir"
+    },
+    "skip": [
+    ],
+    "enemies": [
+        "_r_c-enemy-naga-02.png",
+        "_r_c-enemy-nagaqueen-01.png",
+        "_r_c-enemy-wolf-01.png",
+        "_r_c-enemy-wolf-02.png"
+    ],
+    "titles": [
+    ]
+}
