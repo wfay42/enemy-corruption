@@ -96,10 +96,10 @@ class Converter():
             print("Skipping resizing %s to %s" % (img_path, out_img_path))
             return None
 
-        # for a 1080p game, enemy files need to be <800 pixels high
+        # for a 1080 game, enemies can be 1080 if there are no character portraits
         dimensions = "1000x1080"
         if "enemy" in filename:
-            dimensions = "6967x900"
+            dimensions = "1000x1080"
         # ending files we resize to the size of the game window
         elif "ending" in filename:
             dimensions = "1920x1080"
