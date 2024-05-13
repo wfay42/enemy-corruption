@@ -1,6 +1,7 @@
 *.jpg
 *.png
 *.xcf
+*.lnk
 
 /game/audio
 /game/effects
