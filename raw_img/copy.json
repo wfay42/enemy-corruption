@@ -5,6 +5,8 @@
         "titles": "list of images to copy to titles_dir"
     },
     "skip": [
+        "_r_c-villager-lovebug-03a.png",
+        "_r_c-villager-lovebug-03b.png"
     ],
     "enemies": [
         "_r_c-enemy-naga-02.png",

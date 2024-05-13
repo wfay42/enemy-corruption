@@ -55,8 +55,8 @@ class Converter():
 
         # TODO: should probably return a struct with the input and output paths
         return subprocess.Popen(["magick", "convert",
-            "-crop", "+700+0+1000x1440",
-            "-crop", "-860+0+1000x1440",
+            "-crop", "+500+0+1000x1080",
+            "-crop", "-520+0+1000x1080",
             img_path, out_img_path])
 
     def crop_original_images(self, root_path):
@@ -96,10 +96,10 @@ class Converter():
             print("Skipping resizing %s to %s" % (img_path, out_img_path))
             return None
 
-        # enemy files need to be <640 pixels high
+        # for a 1080p game, enemy files need to be <800 pixels high
         dimensions = "1000x1080"
         if "enemy" in filename:
-            dimensions = "694x900"
+            dimensions = "6967x900"
         # ending files we resize to the size of the game window
         elif "ending" in filename:
             dimensions = "1920x1080"
