@@ -24,8 +24,9 @@
     const femmeFataleState = 33;
     const maidState = 34;
     const stepfordState = 35;
+    const lovebugState = 36;
 
-    const statesArray = [clownyState, femmeFataleState, maidState, stepfordState];
+    const statesArray = [clownyState, femmeFataleState, maidState, stepfordState, lovebugState];
 
     const stateLookupTable = new Map();
 
@@ -63,7 +64,7 @@
     addToLookupTable(clownyState, [1, 2, 3]);
 
     // villager
-    addToLookupTable(clownyState, [villager, villager+1, villager+2, villager+3]);
+    addToLookupTable(lovebugState, [villager, villager+1, villager+2, villager+3]);
 
     /**
      *
