@@ -69,7 +69,7 @@
     addToLookupTable(lovebugState, [villager, villager+1, villager+2, villager+3]);
 
     // arisa
-    addToLookupTable(droidifyState, [arisa, arisa+1]);
+    addToLookupTable(droidifyState, [arisa, arisa+1, arisa+2, arisa+3, arisa+4]);
 
     /**
      *

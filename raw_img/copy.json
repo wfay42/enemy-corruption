@@ -6,7 +6,11 @@
     },
     "skip": [
         "_r_c-villager-lovebug-03a.png",
-        "_r_c-villager-lovebug-03b.png"
+        "_r_c-villager-lovebug-03b.png",
+        "_r_c-arisa-02a.png",
+        "_r_c-arisa-02b.png",
+        "_r_c-arisa-03a.png",
+        "_r_c-arisa-03b.png"
     ],
     "enemies": [
         "_r_c-enemy-naga-02.png",
