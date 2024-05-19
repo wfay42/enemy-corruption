@@ -1,5 +1,6 @@
 {
     "default_dir": "..\\game\\img\\enemies",
     "enemies_dir": "..\\game\\img\\enemies",
+    "pictures_dir": "..\\game\\img\\pictures",
     "titles_dir": "..\\game\\img\\titles1"
 }

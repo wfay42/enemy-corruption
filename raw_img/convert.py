@@ -13,6 +13,7 @@ class CopyInstructions():
         # all of these are lists
         self.skip = obj['skip']
         self.enemies = obj['enemies']
+        self.pictures = obj['pictures']
         self.titles = obj['titles']
 
         with open(copy_dirs_json_file_path) as fp:
@@ -20,6 +21,7 @@ class CopyInstructions():
 
         self.default_dir = obj['default_dir']
         self.enemies_dir = obj['enemies_dir']
+        self.pictures_dir = obj['pictures_dir']
         self.titles_dir = obj['titles_dir']
 
 class Converter():
@@ -135,6 +137,8 @@ class Converter():
             output_dir = None
         elif basename in copy_instructions.enemies:
             output_dir = copy_instructions.enemies_dir
+        elif basename in copy_instructions.pictures:
+            output_dir = copy_instructions.pictures_dir
         elif basename in copy_instructions.titles:
             output_dir = copy_instructions.titles_dir
 

@@ -13,10 +13,13 @@
         "_r_c-arisa-03b.png"
     ],
     "enemies": [
-        "_r_c-enemy-naga-02.png",
-        "_r_c-enemy-nagaqueen-01.png",
-        "_r_c-enemy-wolf-01.png",
-        "_r_c-enemy-wolf-02.png"
+    ],
+    "pictures": [
+        "_r_c-shiori-lay.png",
+        "_r_c-shiori-stand.png",
+        "_r_c-shiori-stand-worried.png",
+        "_r_c-arisa-stand.png",
+        "_r_c-arisa-pet-stand.png"
     ],
     "titles": [
     ]
