@@ -13,6 +13,7 @@ class CopyInstructions():
         # all of these are lists
         self.skip = obj['skip']
         self.enemies = obj['enemies']
+        self.faces = obj['faces']
         self.pictures = obj['pictures']
         self.titles = obj['titles']
 
@@ -21,6 +22,7 @@ class CopyInstructions():
 
         self.default_dir = obj['default_dir']
         self.enemies_dir = obj['enemies_dir']
+        self.faces_dir = obj['faces_dir']
         self.pictures_dir = obj['pictures_dir']
         self.titles_dir = obj['titles_dir']
 
@@ -56,9 +58,11 @@ class Converter():
             return None
 
         # TODO: should probably return a struct with the input and output paths
+        first_crop_values = "+500+0+1000x1080"
+        second_crop_value = "-520+0+1000x1080"
         return subprocess.Popen(["magick", "convert",
-            "-crop", "+500+0+1000x1080",
-            "-crop", "-520+0+1000x1080",
+            "-crop", first_crop_values,
+            "-crop", second_crop_value,
             img_path, out_img_path])
 
     def crop_original_images(self, root_path):

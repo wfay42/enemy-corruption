@@ -5,7 +5,7 @@ null,
 {"id":3,"battlerName":"Actor1_3","characterIndex":2,"characterName":"Actor1","classId":5,"equips":[31,0,65,5,0],"faceIndex":2,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Gale","nickname":"","note":"","profile":""},
 {"id":4,"battlerName":"Actor1_4","characterIndex":3,"characterName":"Actor1","classId":5,"equips":[31,0,0,5,0],"faceIndex":3,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Michelle","nickname":"","note":"","profile":""},
 {"id":5,"battlerName":"Actor1_5","characterIndex":4,"characterName":"Actor1","classId":2,"equips":[7,0,0,20,0],"faceIndex":4,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Albert","nickname":"","note":"","profile":""},
-{"id":6,"battlerName":"","characterIndex":7,"characterName":"_Petroids","classId":8,"equips":[7,0,65,21,0],"faceIndex":0,"faceName":"shiori-stand-face-144","traits":[],"initialLevel":1,"maxLevel":99,"name":"Shiori","nickname":"","note":"","profile":""},
+{"id":6,"battlerName":"","characterIndex":7,"characterName":"_Petroids","classId":8,"equips":[7,0,65,21,0],"faceIndex":0,"faceName":"petroids","traits":[],"initialLevel":1,"maxLevel":99,"name":"Shiori","nickname":"","note":"","profile":""},
 {"id":7,"battlerName":"Actor1_7","characterIndex":6,"characterName":"Actor1","classId":3,"equips":[7,0,0,20,0],"faceIndex":6,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Eliot","nickname":"","note":"","profile":""},
 {"id":8,"battlerName":"Actor1_8","characterIndex":7,"characterName":"Actor1","classId":3,"equips":[7,0,0,20,0],"faceIndex":7,"faceName":"Actor1","traits":[],"initialLevel":1,"maxLevel":99,"name":"Roza","nickname":"","note":"","profile":""}
 ]
