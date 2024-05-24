@@ -3,7 +3,7 @@
     "main": "index.html",
     "chromium-args": "--force-color-profile=srgb",
     "window": {
-        "title": "Clown Curse",
+        "title": "Petroids in Space",
         "width": 1920,
         "height": 1080,
         "position": "center",
