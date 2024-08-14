@@ -1,0 +1,11 @@
+{
+    "comments": [
+        "default is the default value to crop and resize an image in this directory",
+        "crops is a list of crops to peform, in order, in imagemagick syntax",
+        "resize is a string for how to resize the image after the crops"
+    ],
+    "default": {
+        "crops": ["+500+0+1000x1080", "-520+0+1000x1080"],
+        "resize": "1000x1080"
+    }
+}
