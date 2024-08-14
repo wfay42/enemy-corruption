@@ -1,0 +1,28 @@
+{
+    "comments": [
+        "default is the default value to crop and resize an image in this directory",
+          "crops is a list of crops to peform, in order, in imagemagick syntax",
+          "resize is a string for how to resize the image after the crops",
+        "skip is the list of images to skip all processing"
+    ],
+    "default": {
+        "crops": ["+0+0+1920x1080"],
+        "resize": "144x144"
+    },
+    "skip": [
+    ],
+    "custom": {
+        "arisa-stand.png": {
+            "crops": ["640x640+683+4"],
+            "resize": "144x144"
+        },
+        "arisa-pet-stand.png": {
+            "crops": ["689x689+604+4"],
+            "resize": "144x144"
+        },
+        "shiori-stand.png": {
+            "crops": ["489x489+675+8"],
+            "resize": "144x144"
+        }
+    }
+}

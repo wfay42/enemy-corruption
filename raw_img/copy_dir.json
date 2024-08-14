@@ -3,5 +3,6 @@
     "enemies_dir": "..\\game\\img\\enemies",
     "faces_dir": "..\\game\\img\\faces",
     "pictures_dir": "..\\game\\img\\pictures",
-    "titles_dir": "..\\game\\img\\titles1"
+    "titles_dir": "..\\game\\img\\titles1",
+    "image_root_dir": "..\\game\\img"
 }
