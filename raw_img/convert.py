@@ -168,7 +168,7 @@ def main():
 
     print("Converting files in directory %s" % root_path)
     converter = Converter()
-    dir_list = ['enemies', 'faces']
+    dir_list = ['enemies', 'faces', 'pictures']
     converter.process_all_directories(root_path, copy_instructions.image_root_dir, dir_list, copy_instructions)
 
 if __name__ == '__main__':

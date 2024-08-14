@@ -7,23 +7,10 @@
         "custom is a map of image names to custom crops and resize for that image"
     ],
     "default": {
-        "crops": ["+0+0+1920x1080"],
-        "resize": "144x144"
+        "crops": ["+500+0+1000x1080", "-520+0+1000x1080"],
+        "resize": "1000x1080"
     },
     "skip": [
     ],
-    "custom": {
-        "arisa-stand.png": {
-            "crops": ["640x640+683+4"],
-            "resize": "144x144"
-        },
-        "arisa-pet-stand.png": {
-            "crops": ["689x689+604+4"],
-            "resize": "144x144"
-        },
-        "shiori-stand.png": {
-            "crops": ["489x489+675+8"],
-            "resize": "144x144"
-        }
-    }
+    "custom": {}
 }
