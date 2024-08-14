@@ -5,8 +5,7 @@ import os
 import shutil
 import sys
 
-CROPPED_DIRNAME = 'cropped'
-RESIZED_DIRNAME = 'resized'
+PROCESSED_DIRNAME = 'processed'
 COPY_FILENAME = 'copy.json'
 
 class CopyInstructions():
@@ -78,9 +77,12 @@ class Converter():
             "-crop", second_crop_value,
             img_path, out_img_path])
 
-    def crop_image2(self, img_path, cropped_dir, crops, resize):
+    def process_image(self, img_path, processed_dir, crops, resize):
+        """
+        Crop and resize a single image, returning the subprocess that is asynchronously performing that change
+        """
         filename = os.path.basename(img_path)
-        out_img_path = os.path.join(cropped_dir, filename)
+        out_img_path = os.path.join(processed_dir, filename)
 
         if not self.should_convert(img_path, out_img_path):
             print("Skipping cropping %s to %s" % (img_path, out_img_path))
@@ -205,15 +207,11 @@ class Converter():
             shutil.copy2(path, output_path)
 
     def setup_output_dirs(self, input_dir_path):
-        cropped_dir = os.path.join(input_dir_path, CROPPED_DIRNAME)
-        resized_dir = os.path.join(input_dir_path, RESIZED_DIRNAME)
-        if not os.path.exists(cropped_dir):
-            os.mkdir(cropped_dir)
-            print("Created cropped dir %s" % (cropped_dir))
-        if not os.path.exists(resized_dir):
-            os.mkdir(resized_dir)
-            print("Created resized dir %s" % (resized_dir))
-        return (cropped_dir, resized_dir)
+        processed_dir = os.path.join(input_dir_path, PROCESSED_DIRNAME)
+        if not os.path.exists(processed_dir):
+            os.mkdir(processed_dir)
+            print("Created dir for processed images: %s" % (processed_dir))
+        return (processed_dir)
 
     def read_dir_copy_instructions(self, input_dir_path):
         copy_instructions_path = os.path.join(input_dir_path, COPY_FILENAME)
@@ -224,9 +222,8 @@ class Converter():
         """
         Takes original (raw) images, and crops them appropriately
         """
-        # create directories for cropped and resized images
-
-        cropped_dir, resized_dir = self.setup_output_dirs(input_dir_path)
+        # create directories for processed images
+        processed_dir = self.setup_output_dirs(input_dir_path)
         dir_copy_instructions = self.read_dir_copy_instructions(input_dir_path)
         default = dir_copy_instructions.default
         print("Will crop to %s and resize to %s" % (default['crops'], default['resize']))
@@ -244,7 +241,7 @@ class Converter():
             # TODO, need better crop image instruction
             crops = default['crops']
             resize = default['resize']
-            popen = self.crop_image2(path, cropped_dir, crops, resize)
+            popen = self.process_image(path, processed_dir, crops, resize)
             if popen is not None:
                 conversion_popens.append(popen)
 
