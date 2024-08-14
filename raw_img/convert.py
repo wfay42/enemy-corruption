@@ -211,6 +211,15 @@ class Converter():
             print("Copying %s to %s" % (path, output_path))
             shutil.copy2(path, output_path)
 
+    def copy_processed_files(self, input_processed_dir, output_dir):
+
+        path_pattern = os.path.join(input_processed_dir, "*.png")
+        path_list = glob.glob(path_pattern)
+
+        for path in path_list:
+            print("Copying %s into %s" % (path, output_dir))
+            shutil.copy2(path, output_dir)
+
     def setup_output_dirs(self, input_dir_path):
         processed_dir = os.path.join(input_dir_path, PROCESSED_DIRNAME)
         if not os.path.exists(processed_dir):
@@ -250,6 +259,8 @@ class Converter():
         for popen in conversion_popens:
             success = popen.wait()
             print("Subprocess return code: %s" % success)
+
+        self.copy_processed_files(processed_dir, output_dir_path)
 
 
     def process_all_directories(self, input_root_path, output_root_path, dir_list, copy_instructions):
