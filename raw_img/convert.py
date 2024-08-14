@@ -25,11 +25,6 @@ class CopyInstructions():
         with open(copy_dirs_json_file_path) as fp:
             obj = json.load(fp)
 
-        self.default_dir = obj['default_dir']
-        self.enemies_dir = obj['enemies_dir']
-        self.faces_dir = obj['faces_dir']
-        self.pictures_dir = obj['pictures_dir']
-        self.titles_dir = obj['titles_dir']
         self.image_root_dir = obj['image_root_dir']
 
 class DirCopyInstructions():
@@ -118,7 +113,7 @@ class Converter():
         return crops, resize
 
 
-    def process_images_for_directory(self, input_dir_path, output_dir_path, copy_instructions):
+    def process_images_for_directory(self, input_dir_path, output_dir_path):
         """
         Takes original (raw) images, and crops them appropriately
         """
@@ -148,12 +143,12 @@ class Converter():
         self.copy_processed_files(processed_dir, output_dir_path)
 
 
-    def process_all_directories(self, input_root_path, output_root_path, dir_list, copy_instructions):
+    def process_all_directories(self, input_root_path, output_root_path, dir_list):
         for dir_name in dir_list:
             input_dir_path = os.path.join(input_root_path, dir_name)
             output_dir_path = os.path.join(output_root_path, dir_name)
             print("Will process %s and output to %s" % (input_dir_path, output_dir_path))
-            self.process_images_for_directory(input_dir_path, output_dir_path, copy_instructions)
+            self.process_images_for_directory(input_dir_path, output_dir_path)
 
 def main():
     if len(sys.argv) < 4:
@@ -169,7 +164,7 @@ def main():
     print("Converting files in directory %s" % root_path)
     converter = Converter()
     dir_list = ['enemies', 'faces', 'pictures']
-    converter.process_all_directories(root_path, copy_instructions.image_root_dir, dir_list, copy_instructions)
+    converter.process_all_directories(root_path, copy_instructions.image_root_dir, dir_list)
 
 if __name__ == '__main__':
     main()
