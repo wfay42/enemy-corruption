@@ -7,6 +7,8 @@ import sys
 
 PROCESSED_DIRNAME = 'processed'
 COPY_FILENAME = 'copy.json'
+CROPS_KEY = 'crops'
+RESIZE_KEY = 'resize'
 
 class CopyInstructions():
     def __init__(self, copy_instructions_json_file_path, copy_dirs_json_file_path):
@@ -38,6 +40,7 @@ class DirCopyInstructions():
 
         self.default = obj['default']
         self.skip_list = obj['skip']
+        self.custom = obj['custom']
 
 class Converter():
     def __init__(self, convert_all = False):
@@ -103,6 +106,18 @@ class Converter():
         dir_copy_instructions = DirCopyInstructions(copy_instructions_path)
         return dir_copy_instructions
 
+    def get_crops_and_resizes(self, img_filename, dir_copy_instructions):
+        default = dir_copy_instructions.default
+        crops = default[CROPS_KEY]
+        resize = default[RESIZE_KEY]
+
+        custom = dir_copy_instructions.custom
+        if img_filename in custom:
+            crops, resize = custom[img_filename][CROPS_KEY], custom[img_filename][RESIZE_KEY]
+
+        return crops, resize
+
+
     def process_images_for_directory(self, input_dir_path, output_dir_path, copy_instructions):
         """
         Takes original (raw) images, and crops them appropriately
@@ -112,7 +127,7 @@ class Converter():
         dir_copy_instructions = self.read_dir_copy_instructions(input_dir_path)
         default = dir_copy_instructions.default
         skip_list = dir_copy_instructions.skip_list
-        print("Will crop to %s and resize to %s" % (default['crops'], default['resize']))
+        print("Will crop to %s and resize to %s" % (default[CROPS_KEY], default[RESIZE_KEY]))
 
         # get input images
         path_pattern = os.path.join(input_dir_path, "*.png")
@@ -120,8 +135,8 @@ class Converter():
 
         conversion_popens = []
         for path in path_list:
-            crops = default['crops']
-            resize = default['resize']
+            img_filename = os.path.basename(path)
+            crops, resize = self.get_crops_and_resizes(img_filename, dir_copy_instructions)
             popen = self.process_image(path, processed_dir, skip_list, crops, resize)
             if popen is not None:
                 conversion_popens.append(popen)
@@ -154,7 +169,7 @@ def main():
 
     print("Converting files in directory %s" % root_path)
     converter = Converter()
-    dir_list = ['enemies']
+    dir_list = ['enemies', 'faces']
     converter.process_all_directories(root_path, copy_instructions.image_root_dir, dir_list, copy_instructions)
 
 if __name__ == '__main__':
