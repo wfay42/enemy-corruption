@@ -1,11 +1,22 @@
 {
     "comments": [
         "default is the default value to crop and resize an image in this directory",
-        "crops is a list of crops to peform, in order, in imagemagick syntax",
-        "resize is a string for how to resize the image after the crops"
+          "crops is a list of crops to peform, in order, in imagemagick syntax",
+          "resize is a string for how to resize the image after the crops",
+        "skip is the list of images to skip all processing"
     ],
     "default": {
         "crops": ["+500+0+1000x1080", "-520+0+1000x1080"],
         "resize": "1000x1080"
-    }
+    },
+    "skip": [
+        "arisa-02a.png",
+        "arisa-02b.png",
+        "arisa-03a.png",
+        "arisa-03b.png",
+        "ayaka-02a.png",
+        "ayaka-02b.png",
+        "ayaka-03a.png",
+        "ayaka-03b.png"
+    ]
 }

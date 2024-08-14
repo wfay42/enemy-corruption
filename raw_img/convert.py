@@ -37,14 +37,19 @@ class DirCopyInstructions():
             obj = json.load(fp)
 
         self.default = obj['default']
+        self.skip_list = obj['skip']
 
 class Converter():
     def __init__(self, convert_all = False):
         self.convert_all = convert_all
 
-    def should_convert(self, img_path, out_img_path):
+    def should_convert(self, img_path, out_img_path, skip_list = []):
         if self.convert_all:
             return True
+
+        # if the name of the input file is in the list to skip
+        if os.path.basename(img_path) in skip_list:
+            return False
 
         # if the output file doesn't exist, we should make it
         if not os.path.exists(out_img_path):
@@ -77,14 +82,14 @@ class Converter():
             "-crop", second_crop_value,
             img_path, out_img_path])
 
-    def process_image(self, img_path, processed_dir, crops, resize):
+    def process_image(self, img_path, processed_dir, skip_list, crops, resize):
         """
         Crop and resize a single image, returning the subprocess that is asynchronously performing that change
         """
         filename = os.path.basename(img_path)
         out_img_path = os.path.join(processed_dir, filename)
 
-        if not self.should_convert(img_path, out_img_path):
+        if not self.should_convert(img_path, out_img_path, skip_list):
             print("Skipping cropping %s to %s" % (img_path, out_img_path))
             return None
 
@@ -226,6 +231,7 @@ class Converter():
         processed_dir = self.setup_output_dirs(input_dir_path)
         dir_copy_instructions = self.read_dir_copy_instructions(input_dir_path)
         default = dir_copy_instructions.default
+        skip_list = dir_copy_instructions.skip_list
         print("Will crop to %s and resize to %s" % (default['crops'], default['resize']))
 
         # get input images
@@ -234,14 +240,9 @@ class Converter():
 
         conversion_popens = []
         for path in path_list:
-            # ignore cropped or resized images created from the conversion process
-            basename = os.path.basename(path)
-            print("Inspecting file path %s", path)
-
-            # TODO, need better crop image instruction
             crops = default['crops']
             resize = default['resize']
-            popen = self.process_image(path, processed_dir, crops, resize)
+            popen = self.process_image(path, processed_dir, skip_list, crops, resize)
             if popen is not None:
                 conversion_popens.append(popen)
 
