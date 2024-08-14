@@ -127,7 +127,6 @@ class Converter():
         dir_copy_instructions = self.read_dir_copy_instructions(input_dir_path)
         default = dir_copy_instructions.default
         skip_list = dir_copy_instructions.skip_list
-        print("Will crop to %s and resize to %s" % (default[CROPS_KEY], default[RESIZE_KEY]))
 
         # get input images
         path_pattern = os.path.join(input_dir_path, "*.png")

@@ -10,14 +10,6 @@
         "resize": "144x144"
     },
     "skip": [
-        "arisa-02a.png",
-        "arisa-02b.png",
-        "arisa-03a.png",
-        "arisa-03b.png",
-        "ayaka-02a.png",
-        "ayaka-02b.png",
-        "ayaka-03a.png",
-        "ayaka-03b.png"
     ],
     "custom": {
         "arisa-stand.png": {
