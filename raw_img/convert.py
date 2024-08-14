@@ -11,17 +11,7 @@ CROPS_KEY = 'crops'
 RESIZE_KEY = 'resize'
 
 class CopyInstructions():
-    def __init__(self, copy_instructions_json_file_path, copy_dirs_json_file_path):
-        with open(copy_instructions_json_file_path) as fp:
-            obj = json.load(fp)
-
-        # all of these are lists
-        self.skip = obj['skip']
-        self.enemies = obj['enemies']
-        self.faces = obj['faces']
-        self.pictures = obj['pictures']
-        self.titles = obj['titles']
-
+    def __init__(self, copy_dirs_json_file_path):
         with open(copy_dirs_json_file_path) as fp:
             obj = json.load(fp)
 
@@ -151,15 +141,14 @@ class Converter():
             self.process_images_for_directory(input_dir_path, output_dir_path)
 
 def main():
-    if len(sys.argv) < 4:
-        print("Usage: convert.py input_directory copy_directory copy_instructions")
+    if len(sys.argv) < 3:
+        print("Usage: convert.py input_directory copy_dir.json")
         return
 
     # eagerly initialize everything from arguments to find any issues
     root_path = sys.argv[1]
     copy_dirs_json_file_path = sys.argv[2]
-    copy_instructions_json_file_path = sys.argv[3]
-    copy_instructions = CopyInstructions(copy_instructions_json_file_path, copy_dirs_json_file_path)
+    copy_instructions = CopyInstructions(copy_dirs_json_file_path)
 
     print("Converting files in directory %s" % root_path)
     converter = Converter()
