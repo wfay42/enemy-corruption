@@ -5,6 +5,10 @@ import os
 import shutil
 import sys
 
+CROPPED_DIRNAME = 'cropped'
+RESIZED_DIRNAME = 'resized'
+COPY_FILENAME = 'copy.json'
+
 class CopyInstructions():
     def __init__(self, copy_instructions_json_file_path, copy_dirs_json_file_path):
         with open(copy_instructions_json_file_path) as fp:
@@ -25,6 +29,15 @@ class CopyInstructions():
         self.faces_dir = obj['faces_dir']
         self.pictures_dir = obj['pictures_dir']
         self.titles_dir = obj['titles_dir']
+        self.image_root_dir = obj['image_root_dir']
+
+class DirCopyInstructions():
+    """ Copy instructions for a single input image directory """
+    def __init__(self, copy_instructions_json_file_path):
+        with open(copy_instructions_json_file_path) as fp:
+            obj = json.load(fp)
+
+        self.default = obj['default']
 
 class Converter():
     def __init__(self, convert_all = False):
@@ -64,6 +77,23 @@ class Converter():
             "-crop", first_crop_values,
             "-crop", second_crop_value,
             img_path, out_img_path])
+
+    def crop_image2(self, img_path, cropped_dir, crops, resize):
+        filename = os.path.basename(img_path)
+        out_img_path = os.path.join(cropped_dir, filename)
+
+        if not self.should_convert(img_path, out_img_path):
+            print("Skipping cropping %s to %s" % (img_path, out_img_path))
+            return None
+
+        arguments = ["magick", "convert"]
+        for crop in crops:
+            arguments.extend(['-crop', crop])
+        arguments.extend(['-resize', resize])
+        arguments.extend([img_path, out_img_path])
+
+        print("Cropping: %s" % arguments)
+        return subprocess.Popen(arguments)
 
     def crop_original_images(self, root_path):
         """
@@ -174,6 +204,63 @@ class Converter():
             print("Copying %s to %s" % (path, output_path))
             shutil.copy2(path, output_path)
 
+    def setup_output_dirs(self, input_dir_path):
+        cropped_dir = os.path.join(input_dir_path, CROPPED_DIRNAME)
+        resized_dir = os.path.join(input_dir_path, RESIZED_DIRNAME)
+        if not os.path.exists(cropped_dir):
+            os.mkdir(cropped_dir)
+            print("Created cropped dir %s" % (cropped_dir))
+        if not os.path.exists(resized_dir):
+            os.mkdir(resized_dir)
+            print("Created resized dir %s" % (resized_dir))
+        return (cropped_dir, resized_dir)
+
+    def read_dir_copy_instructions(self, input_dir_path):
+        copy_instructions_path = os.path.join(input_dir_path, COPY_FILENAME)
+        dir_copy_instructions = DirCopyInstructions(copy_instructions_path)
+        return dir_copy_instructions
+
+    def process_images_for_directory(self, input_dir_path, output_dir_path, copy_instructions):
+        """
+        Takes original (raw) images, and crops them appropriately
+        """
+        # create directories for cropped and resized images
+
+        cropped_dir, resized_dir = self.setup_output_dirs(input_dir_path)
+        dir_copy_instructions = self.read_dir_copy_instructions(input_dir_path)
+        default = dir_copy_instructions.default
+        print("Will crop to %s and resize to %s" % (default['crops'], default['resize']))
+
+        # get input images
+        path_pattern = os.path.join(input_dir_path, "*.png")
+        path_list = glob.glob(path_pattern)
+
+        conversion_popens = []
+        for path in path_list:
+            # ignore cropped or resized images created from the conversion process
+            basename = os.path.basename(path)
+            print("Inspecting file path %s", path)
+
+            # TODO, need better crop image instruction
+            crops = default['crops']
+            resize = default['resize']
+            popen = self.crop_image2(path, cropped_dir, crops, resize)
+            if popen is not None:
+                conversion_popens.append(popen)
+
+        # now that we kicked off all the conversions, check if they succeeded
+        for popen in conversion_popens:
+            success = popen.wait()
+            print("Subprocess return code: %s" % success)
+
+
+    def process_all_directories(self, input_root_path, output_root_path, dir_list, copy_instructions):
+        for dir_name in dir_list:
+            input_dir_path = os.path.join(input_root_path, dir_name)
+            output_dir_path = os.path.join(output_root_path, dir_name)
+            print("Will process %s and output to %s" % (input_dir_path, output_dir_path))
+            self.process_images_for_directory(input_dir_path, output_dir_path, copy_instructions)
+
 def main():
     if len(sys.argv) < 4:
         print("Usage: convert.py input_directory copy_directory copy_instructions")
@@ -187,12 +274,28 @@ def main():
 
     print("Converting files in directory %s" % root_path)
     converter = Converter()
-    converter.crop_original_images(root_path)
-    print("Cropping complete.  Starting resizing.")
-    converter.resize_cropped_images(root_path)
+    dir_list = ['enemies']
+    converter.process_all_directories(root_path, copy_instructions.image_root_dir, dir_list, copy_instructions)
+    # converter.crop_original_images(root_path)
+    # print("Cropping complete.  Starting resizing.")
+    # converter.resize_cropped_images(root_path)
 
-    # copy the resized files somewhere
-    converter.copy_files(root_path, copy_instructions)
+    # # copy the resized files somewhere
+    # converter.copy_files(root_path, copy_instructions)
 
 if __name__ == '__main__':
     main()
+
+# delete me
+pseudocode ="""
+get root "img" path
+for each dir in raw_img:
+    create 'cropped' and 'resized' directories
+    for each img in dir:
+        follow the crop instructions for that directory, output into cropped dir
+        follow the resize instructions for that directory, output into resized dir
+        move the output file to the output directory
+
+
+
+"""
