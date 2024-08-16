@@ -33,6 +33,7 @@
 
     const villager = 13;
     const arisa = 17;
+    const ayaka = 22;
 
     /**
      *
@@ -68,8 +69,9 @@
     // villager
     addToLookupTable(lovebugState, [villager, villager+1, villager+2, villager+3]);
 
-    // arisa
+    // droidify different characters
     addToLookupTable(droidifyState, [arisa, arisa+1, arisa+2, arisa+3, arisa+4]);
+    addToLookupTable(droidifyState, [ayaka, ayaka+1, ayaka+2, ayaka+3, ayaka+4]);
 
     /**
      *
